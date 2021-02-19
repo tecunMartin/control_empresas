@@ -1,7 +1,7 @@
-const modelBusiness = require('../model/business.model');
+const model = require('../model/employees.model');
 
-function list() {
-  return 'Somos la data';
+async function list() {
+  return await model.find();
 }
 
 module.exports = {

@@ -17,7 +17,7 @@ async function crearEmpresas(req, res) {
       direction,
     };
 
-    let findEmpresa = buscarEmpresa(empresaNueva.name, empresaNueva.email)
+    buscarEmpresa(empresaNueva.name, empresaNueva.email)
       .then((empresaEncontrada) => {
         if (empresaEncontrada && empresaEncontrada.length >= 1) {
           return RESPONSE.error(req, res, 'Ya existe una empresa.', 500);
