@@ -4,7 +4,7 @@ const Schame = mongoose.Schema;
 const EMPLOYEES = Schame({
   name: String,
   stall: String,
-  Department: String,
+  department: String,
   business: { type: mongoose.Schema.ObjectId, ref: 'empresas' },
 });
 

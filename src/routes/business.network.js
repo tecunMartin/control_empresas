@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { listarUsuarios } = require('../controllers/business.controller');
-const response = require('../utils/response');
+const { listarUsuarios, createUser, updateEmpleados, updateMe, deleteEmpleado } = require('../controllers/business.controller');
+const { verifyAuth } = require('../utils/verify-auth');
 
-router.get('/', (req, res) => {
-  listarUsuarios()
-    .then((data) => response.success(req, res, data, 200))
-    .catch((e) => response.error(req, res, 'Error interno', 500, e));
-});
+router.get('/', verifyAuth, listarUsuarios);
+router.post('/create', verifyAuth, createUser);
+router.put('/update/employees/:idEmpleado', verifyAuth, updateEmpleados);
+router.put('/update/me/:idEmpresa', verifyAuth, updateMe);
+router.delete('/delete/:idEmpleado', verifyAuth, deleteEmpleado);
 
 module.exports = router;

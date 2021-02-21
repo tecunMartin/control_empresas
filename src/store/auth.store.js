@@ -1,6 +1,4 @@
-const model = require('../model/business.model');
-
-async function findWithEmail(email) {
+async function findWithEmail(model, email) {
   return await model.findOne({ email });
 }
 

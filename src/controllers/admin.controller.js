@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt-nodejs');
 const chalk = require('chalk');
 /* Importaciones personales */
-const { list, buscarEmpresa, guardarEmpresa, updateEmpresa: update, removeEmpresa } = require('../store/admin.store');
+const { list, buscarEmpresa, guardarEmpresa, updateEmpresa: update, removeEmpresa, buscarEmpresaId } = require('../store/admin.store');
 const RESPONSE = require('../utils/response');
 
 async function obtenerEmpresas() {
@@ -20,7 +20,7 @@ async function crearEmpresas(req, res) {
     buscarEmpresa(empresaNueva.name, empresaNueva.email)
       .then((empresaEncontrada) => {
         if (empresaEncontrada && empresaEncontrada.length >= 1) {
-          return RESPONSE.error(req, res, 'Ya existe una empresa.', 500);
+          return RESPONSE.error(req, res, 'Ya existe una empresa.', 404);
         } else {
           bcrypt.hash(password, null, null, (err, passEncriptado) => {
             empresaNueva.password = passEncriptado;
@@ -53,14 +53,22 @@ async function updateEmpresa(req, res) {
   const empresaParametros = req.body;
   delete empresaParametros.password;
 
-  update(idEmpresa, empresaParametros)
-    .then((empresaModificada) => {
-      return RESPONSE.success(req, res, empresaModificada, 200);
+  buscarEmpresaId(idEmpresa)
+    .then((empresEncontrada) => {
+      if (empresEncontrada) {
+        update(idEmpresa, empresaParametros)
+          .then((empresaModificada) => {
+            return RESPONSE.success(req, res, empresaModificada, 200);
+          })
+          .catch((err) => {
+            console.log(err);
+            return RESPONSE.error(req, res, 'Error interno', 500);
+          });
+      } else {
+        return RESPONSE.error(req, res, 'Empresa no existente.', 404);
+      }
     })
-    .catch((err) => {
-      console.log(err);
-      return RESPONSE.error(req, res, 'Error interno', 500);
-    });
+    .catch((err) => RESPONSE.error(req, res, 'Error interno', 500));
 }
 
 async function deleteEmpresa(req, res) {

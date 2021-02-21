@@ -17,6 +17,10 @@ async function updateEmpresa(id, body) {
   return await model.findByIdAndUpdate(id, body, { new: true });
 }
 
+async function buscarEmpresaId(id) {
+  return await model.findById(id);
+}
+
 async function deleteEmpresa(id) {
   return await model.findOneAndDelete({
     _id: id,
@@ -29,4 +33,5 @@ module.exports = {
   guardarEmpresa,
   updateEmpresa,
   removeEmpresa: deleteEmpresa,
+  buscarEmpresaId,
 };

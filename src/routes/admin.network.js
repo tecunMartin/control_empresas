@@ -3,9 +3,10 @@ const router = express.Router();
 /* Importaciones personales. */
 const RESPONSE = require('../utils/response');
 const { obtenerEmpresas, crearEmpresas, updateEmpresa, deleteEmpresa } = require('../controllers/admin.controller');
+const { verifyAuth } = require('../utils/verify-auth');
 
 /* Listar empresas */
-router.get('/', (req, res) => {
+router.get('/', verifyAuth, (req, res) => {
   obtenerEmpresas()
     .then((users) => {
       RESPONSE.success(req, res, users, 200);
@@ -15,10 +16,10 @@ router.get('/', (req, res) => {
     });
 });
 /* Agregar empresas */
-router.post('/create', crearEmpresas);
+router.post('/create', verifyAuth, crearEmpresas);
 /* Modificar empresas */
-router.put('/update/:idEmpresa', updateEmpresa);
+router.put('/update/:idEmpresa', verifyAuth, updateEmpresa);
 /* Eliminar empresa */
-router.delete('/delete/:idEmpresa', deleteEmpresa);
+router.delete('/delete/:idEmpresa', verifyAuth, deleteEmpresa);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
+const bcrypt = require('bcrypt-nodejs');
 const app = require('./app');
 const ADMIN = require('./src/model/admin.model');
 
@@ -17,11 +18,15 @@ mongoose.connect('mongodb://localhost:27017/controlEmpresas', { useNewUrlParser:
       const adminModel = new ADMIN();
       adminModel.userName = 'admin';
       adminModel.email = 'admin123@gmail.com';
-      adminModel.password = '123456';
-
-      adminModel.save((err, datoGuardado) => {
-        if (err) return console.log('Error a la hora de guardar administrador.');
-        !datoGuardado ? console.log('No viene el dato de admin') : console.log(chalk.bgBlueBright.black('Administrador creado con exito.'));
+      bcrypt.hash('123456', null, null, (err, passEncriptado) => {
+        if (err) return console.log(err);
+        adminModel.password = passEncriptado;
+        adminModel.save((err, datoGuardado) => {
+          if (err) return console.log('Error a la hora de guardar administrador.');
+          !datoGuardado
+            ? console.log('No viene el dato de admin')
+            : console.log(chalk.bgBlueBright.black('Administrador creado con exito.'));
+        });
       });
     }
   });
