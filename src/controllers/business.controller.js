@@ -8,6 +8,8 @@ const {
   findQuery,
   findQueryID,
 } = require('../store/business.store');
+const { pdf } = require('../utils/pdf/coding-pdf/pdf.generator');
+const { excel } = require('../utils/exel/coding-exel/exel.generator');
 const RESPONSE = require('../utils/response');
 
 async function listarUsuarios(req, res) {
@@ -123,10 +125,39 @@ async function deleteEmpleado(req, res) {
     });
 }
 
+async function listPDF(req, res) {
+  list(req.empresa.sub)
+    .then((empleadosEncontrados) => {
+      if (empleadosEncontrados) {
+        pdf(empleadosEncontrados, req.empresa);
+        return RESPONSE.success(req, res, 'PDF creado con exito', 200);
+      } else {
+        return RESPONSE.error(req, res, 'NO SE PUEDE CREAR EL PDF', 404);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      return RESPONSE.error(req, res, 'Error interno', 500);
+    });
+}
+
+async function createExcel(req, res) {
+  list(req.empresa.sub).then((empleadoEncontrado) => {
+    if (empleadoEncontrado) {
+      excel(empleadoEncontrado, req.empresa.name);
+      return RESPONSE.success(req, res, empleadoEncontrado, 200);
+    } else {
+      return RESPONSE.error(req, res, 'NO SE PUEDE CREAR EL EXCEL.');
+    }
+  });
+}
+
 module.exports = {
   listarUsuarios,
   createUser,
   updateEmpleados,
   updateMe,
   deleteEmpleado,
+  listPDF,
+  createExcel,
 };

@@ -29,7 +29,7 @@ async function deleteEmpresa(id) {
 }
 
 async function eliminarEmpleados(idbusiness) {
-  return await modelEmpleado.findOneAndDelete({ business: idbusiness });
+  return await modelEmpleado.deleteOne({ business: idbusiness });
 }
 
 module.exports = {
