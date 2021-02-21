@@ -1,7 +1,14 @@
 const bcrypt = require('bcrypt-nodejs');
-const chalk = require('chalk');
 /* Importaciones personales */
-const { list, buscarEmpresa, guardarEmpresa, updateEmpresa: update, removeEmpresa, buscarEmpresaId } = require('../store/admin.store');
+const {
+  list,
+  buscarEmpresa,
+  guardarEmpresa,
+  updateEmpresa: update,
+  removeEmpresa,
+  buscarEmpresaId,
+  eliminarEmpleados,
+} = require('../store/admin.store');
 const RESPONSE = require('../utils/response');
 
 async function obtenerEmpresas() {
@@ -75,12 +82,13 @@ async function deleteEmpresa(req, res) {
   const idEmpresa = req.params.idEmpresa;
   removeEmpresa(idEmpresa)
     .then((empresaEliminada) => {
-      console.log(empresaEliminada);
-      if (empresaEliminada) {
-        return RESPONSE.success(req, res, 'Empresa eliminada con exito!!', 200);
-      } else {
-        return RESPONSE.error(req, res, 'Esta empresa no existe!!', 404);
-      }
+      eliminarEmpleados(empresaEliminada._id).then((empresaEliminadaEmpleado) => {
+        if (empresaEliminadaEmpleado) {
+          return RESPONSE.success(req, res, 'Empresa eliminada con exito!!', 200);
+        } else {
+          return RESPONSE.error(req, res, 'Esta empresa no existe!!', 404);
+        }
+      });
     })
     .catch((err) => {
       console.log(err);

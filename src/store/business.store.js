@@ -26,6 +26,14 @@ async function deleteEmpleado(idEmpleado) {
   return await model.findByIdAndDelete(idEmpleado);
 }
 
+async function findQuery(objectQuery) {
+  return await model.find(objectQuery);
+}
+
+async function findQueryID(id, business) {
+  return await model.findOne({ _id: id, business });
+}
+
 module.exports = {
   list,
   createEmployees,
@@ -33,4 +41,6 @@ module.exports = {
   updataEmployees,
   updateEmpresa,
   deleteEmpleado,
+  findQuery,
+  findQueryID,
 };

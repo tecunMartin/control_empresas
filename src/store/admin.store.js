@@ -1,4 +1,5 @@
 const model = require('../model/business.model');
+const modelEmpleado = require('../model/employees.model');
 
 async function list() {
   return await model.find();
@@ -27,6 +28,10 @@ async function deleteEmpresa(id) {
   });
 }
 
+async function eliminarEmpleados(idbusiness) {
+  return await modelEmpleado.findOneAndDelete({ business: idbusiness });
+}
+
 module.exports = {
   list,
   buscarEmpresa,
@@ -34,4 +39,5 @@ module.exports = {
   updateEmpresa,
   removeEmpresa: deleteEmpresa,
   buscarEmpresaId,
+  eliminarEmpleados,
 };

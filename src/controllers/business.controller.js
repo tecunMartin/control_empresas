@@ -5,18 +5,46 @@ const {
   updataEmployees,
   updateEmpresa,
   deleteEmpleado: removeEmployees,
+  findQuery,
+  findQueryID,
 } = require('../store/business.store');
 const RESPONSE = require('../utils/response');
 
 async function listarUsuarios(req, res) {
-  list(req.empresa.sub)
-    .then((empleadosEncontrados) => {
-      RESPONSE.success(req, res, empleadosEncontrados, 200);
-    })
-    .catch((err) => {
-      console.log(err);
-      RESPONSE.error(req, res, 'Error interno', 500);
+  const query = req.query;
+
+  if (Object.entries(query).length === 0) {
+    list(req.empresa.sub)
+      .then((empleadosEncontrados) => {
+        return RESPONSE.success(req, res, empleadosEncontrados, 200);
+      })
+      .catch((err) => {
+        console.log(err);
+        return RESPONSE.error(req, res, 'Error interno', 500);
+      });
+  } else {
+    query.business = req.empresa.sub;
+    console.log('query', query);
+
+    if (query.id) {
+      findQueryID(query.id, req.empresa.sub).then((empleadoEncontrado) => {
+        if (empleadoEncontrado) {
+          return RESPONSE.success(req, res, empleadoEncontrado, 200);
+        } else {
+          return RESPONSE.error(req, res, 'No existe este usuario en tu empresa.');
+        }
+      });
+    }
+
+    findQuery(query).then((empleadoEncontrado) => {
+      if (empleadoEncontrado) {
+        console.log('empleadoEncontrado', empleadoEncontrado);
+        return RESPONSE.success(req, res, empleadoEncontrado, 200);
+      } else {
+        return RESPONSE.error(req, res, 'No se puede encontrar este empleado.', 500);
+      }
     });
+  }
 }
 
 async function createUser(req, res) {
