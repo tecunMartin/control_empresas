@@ -1,74 +1,97 @@
-# Control de Empresas.
 
-_Control sobre Adminitrador, Emprsas y empleado de una misma empresa._
+# Reciclaje de números (FRONTEND)♻️
+
+  
+
+_Sistema de ROSE IT el cual se encarga del control de Usuarios, Grupos y administración para topics de Kafka._
+
+  
 
 ## Comenzando 🚀
 
-_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
+  
 
-Mira **Instalacion** para inicial el proyecto.
+_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y como desplegarlo al servidor para pruebas._
 
-### Pre-requisitos 📋
+  
 
-_Que cosas necesitas para instalar el software y como instalarlas_
+### Instalación DESARROLLO 🔧
+
+  
+
+_Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para poder tener un entorno de desarrollo._
+
+  
+
+_1. Requisitos mínimos:_
+
+  
+
+_GIT_
+
+  
 
 ```
-npm install -g nodemon
-npm instal
+
+git version = git version 2.39.1.windows.1
+
 ```
 
-### Instalación 🔧
-
-_Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para tener un entorno de desarrollo ejecutandose_
-
-_Requisito minimo para Ejecución_
+  
 
 _NODE_
 
-```
-node -v     = v10.22.0
-```
-
-_NODEMON_
+  
 
 ```
-nodemon -v  = v2.0.7
+
+node -v = v22.14.0
+
 ```
+
+  
 
 _NPM_
 
-```
-npm -v = 6.14.6
-```
-
-_INSTALACION DEPENDENCIAS_
+  
 
 ```
-npm install
+
+npm -v = 10.9.2
+
 ```
 
-## Construido con 🛠️
+  
 
-_Herramientas utilizadas en el Proyecto._
+_2. Clonar repositorio a tu local:_
 
-- [Node](https://nodejs.org/es/) - Manera de correr JAVASCRIPT en backend.
-- [Express](https://expressjs.com/) - El framework web usado en backend.
-- [JavaScript](https://www.javascript.com/) - Lenguaje Utilizado.
-- [NPM](https://www.npmjs.com/) - Manejador de paquetes.
+  
 
-## Autores ✒️
+```
 
-_Mencion a creador de BACKEND_
+git clone <url>
 
-- **Martin Aljenadro Tecún Charles** - _Estudiante_ - [@tecunMartin](https://github.com/tecunMartin)
+```
 
-## Licencia 📄
+  
 
-Este proyecto está bajo la Licencia MIT - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+_3. Agregar una nueva dependencia (package.json):_
 
-## Expresiones de Gratitud 🎁
+  
 
-- Comenta a otros sobre este proyecto 📢
-- Invita una cerveza 🍺 o un café ☕ para conversar.
-- Da las gracias públicamente 🤓.
-- etc.
+```
+
+npm install <package-name>
+
+```
+
+  
+
+_4. Crear .zip para despliegue y pruebas (SEGUIR ORDEN):_
+
+* <small>EL FINA DEL .ZIP ES TENER UNA IMAGEN Y CREAR UN CONTENEDOR EN EL SERVIDOR DE DESARROLLO.</small>
+
+| No. |COMANDO                           | FUNCIONALIDAD|
+|--   |--                                |--            |
+|1    | ``` docker compose build web ``` |Compila (construye) la imagen del servicio web definido en el docker-compose.yml|
+|2    | ``` docker  save  roseit-web-ssr:latest  |  gzip  >  roseit-web-ssr_1.0.1.tar.gz ``` |Exporta la imagen `roseit-web-ssr:latest` a un tar (stdout), lo comprime con `gzip` y guarda el archivo `roseit-web-ssr_1.0.1.tar.gz` (contraparte de `docker load`).|
