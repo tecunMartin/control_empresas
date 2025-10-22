@@ -94,7 +94,7 @@ _4. Crear .zip para despliegue y pruebas (SEGUIR ORDEN):_
 | No. |COMANDO                           | FUNCIONALIDAD|
 |--   |--                                |--            |
 |1    | ``` docker compose build web ``` |Compila (construye) la imagen del servicio web definido en el docker-compose.yml|
-|2    | ``` docker  save  roseit-web-ssr:latest  |  gzip  >  roseit-web-ssr_1.0.1.tar.gz ``` |Exporta la imagen `roseit-web-ssr:latest` a un tar (stdout), lo comprime con `gzip` y guarda el archivo `roseit-web-ssr_1.0.1.tar.gz` (contraparte de `docker load`).|
+|2    | ``` docker  save  roseit-web-ssr:latest \| gzip  >  roseit-web-ssr_1.0.1.tar.gz ``` |Exporta la imagen `roseit-web-ssr:latest` a un tar (stdout), lo comprime con `gzip` y guarda el archivo `roseit-web-ssr_1.0.1.tar.gz` (contraparte de `docker load`).|
 
 
 ### Instalación SERVIDOR 🔧
