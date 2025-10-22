@@ -84,8 +84,8 @@ _Estas instrucciones te permitan ver la aplicación y poder realizar pruebas._
 
 _1. Ruta servidor de pruebas:_
 
-- [Ruta pruebas FRONTEND](http://172.18.2.26:8081/)
-- <small>Si cuentas con una sesión activa de enviara a /home, si no de enviara a /login.</small>
+- [Ruta FRONTEND](http://172.18.2.26:8081/) = http://172.18.2.26:8081
+- <small>Si cuentas con una sesión activa te enviara a **/home**, si no de enviara a **/login**.</small>
 
 _3. Roles y que podrán hacer en cada pantalla:_
 
